@@ -142,3 +142,97 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+// OPTIONAL CHAINING
+function getTotalReviewCount(book) {
+  const goodRead     = book?.reviews?.goodreads?.reviewsCount ?? 0
+  const librarything = book?.reviews?.librarything?.reviewsCount ?? 0
+
+  return goodRead + librarything
+}
+
+let book = getBook(3)
+console.log(getTotalReviewCount(book))
+
+// ARRAY MAP METHOD: USEFUL FOR MODIFYING ORIGINAL ARRAY, RETURNING A NEW ARRAY
+const books = getBooks()
+const x  = [1, 2, 3, 4, 5].map((el) => el * 2)
+
+console.log(x)
+
+const titles = books.map((book) => book.title)
+console.log(titles)
+
+const essentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+  reviewCount: getTotalReviewCount(book)
+}));
+
+console.log(essentialData)
+
+
+// ARRAY FILTER METHOD: USEFUL FOR FILTERING ORIGINAL ARRAY BASED ON A CONDITION
+const longBooks = books.filter((book) => book.pages > 500)
+                       .filter((book) => book.hasMovieAdaptation)
+console.log(longBooks)
+
+const adventureBooks = books.filter((book) => book.genres.includes('adventure'))
+                            .map((book) => book.title)
+console.log(adventureBooks)
+
+// ARRAY REDUCE METHOD
+const add = [1, 2, 3, 4, 5, 6].reduce((acc, num) => acc + num, 0)
+console.log(add)
+
+const pagesAllBooks = books.reduce((acc, book) => acc + book.pages, 0)
+console.log(pagesAllBooks)
+
+// ARRAY SORT METHOD
+const nums = [3, 7, 1, 9, 7]
+const sorted = nums.slice().sort((a, b) => b - a)
+
+// ! SORET METHOD DOES MUTATE THE ORIGINAL ARRAY, NEED TO DO SLICE ON IMMUTABLE OBJECTS OR 
+// ! DEEP COPY ON MUTABLE OBJECTS
+console.log(nums)
+console.log(sorted)
+
+const arr = [{num: 1}, {num: 2}, {num: 3}]
+const sliced = arr.slice()
+
+sliced[0].num = 10
+
+console.log(arr)
+console.log(sliced)
+
+// ! WORKING WITH IMMUTABLE ARRAYS
+// 1) Add Book Object into Array
+const newBook = {
+  id: 6,
+  title: "Harry Potter and the Chamber of Secrets",
+  author: "J. K. Rowling"
+}
+
+const bookAfterAdding = [...books, newBook]
+
+console.log(books)
+console.log(bookAfterAdding)
+
+// 2) Delete book object from array
+const bookAfterDelete = bookAfterAdding.filter((book) => book.id !== 3)
+console.log(bookAfterDelete)
+
+// 3) Update book object in the array
+const bookAfterUpdate = bookAfterDelete.map((book) => book.id === 1 ? {
+  ...book,
+  pages: 1,
+  genres: [
+    ...book.genres,
+    'Horror'
+  ]
+} : book)
+console.log(bookAfterUpdate)
+
+// ASYNCHRONOUS JAVASCRIPT
+const apiCall = await fetch("https://jsonplaceholder.typicode.com/todos")
+console.log(apiCall)
