@@ -7,5 +7,44 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- ! CORE REACT LIBRARY: COMPONENTS, STATES, ALL REACT STUFFS -->
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+
+    <!-- ! RENDERING REACT COMPONENTS INTO BROWSER -->
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+
+    <script type="text/javascript">
+      function App() {
+        // Ini React Component Karena return React Element
+        const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+
+        React.useEffect(() => {
+          const timeInterval = setInterval(() => {
+            setTime(new Date().toLocaleTimeString());
+          }, 1000);
+
+          return () => clearInterval(timeInterval);
+        }, []); // Dependency Array kosong, jadi useEffect hanya jalan pertama kali saat diremount, tidak dijalankan lagi saat re-render
+
+        return React.createElement(
+          "header", // HTML TAG TYPE
+          null, // Property of the React Element
+          `Hello React! ${time}`, // Children of the Formed React Element
+        ); // Method coming from the first script
+      }
+
+      //   console.log(typeof App()); // Error krna Hook hanya boleh dijalankan oleh renderer   
+
+      const createEle = React.createElement(App);
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(React.createElement(App)); // createElement menghasilkan reactElement dari React component ataupun HTML tag biasa
+    </script>
   </body>
 </html>
