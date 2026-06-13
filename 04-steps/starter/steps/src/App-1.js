@@ -18,8 +18,8 @@ const dateGlob = new Date();
 export default function App() {
   return <div>
     <Steps />
-    {/* <DateCounter />
-    <DateCounter2 /> */}
+    <DateCounter />
+    <DateCounter2 />
   </div>
 }
 
@@ -63,34 +63,23 @@ function Steps() {
           </p>
 
           <div className="buttons">
-            <Button
-              txtColor="#7950f2"
-              bgColor="#fff"
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
               onClick={handlePrevious}
-            > 
-              👈 Previous
-            </Button>
-            <Button
-              txtColor="#7950f2"
-              bgColor="#fff"
+            >
+              Previous
+            </button>
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
               onClick={handleNext}
             >
-              👉 Next
-            </Button>
+              Next
+            </button>
           </div>
         </div>
       )}
     </>
   );
-}
-
-function Button({ txtColor, bgColor, onClick, children }) {
-  return <button
-    style={{ backgroundColor: "#7950f2", color: "#fff", textTransform: "uppercase" }}
-    onClick={onClick}
-  >
-    { children }
-  </button>;
 }
 
 function DateCounter() {
